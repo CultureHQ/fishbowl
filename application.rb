@@ -87,6 +87,7 @@ module FishBowl
     end
 
     set :server, 'puma'
+    set :bind, '0.0.0.0'
 
     get '/' do
       protected!
