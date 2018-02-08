@@ -94,6 +94,10 @@ module FishBowl
       send_file('views/index.html')
     end
 
+    get '/ping' do
+      halt 200
+    end
+
     post '/events' do
       RedisFactory.build.publish(RedisFactory::CHANNEL, request.body.read)
     end
