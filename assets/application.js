@@ -4,8 +4,23 @@ self.onload = () => {
     navigator.serviceWorker.register('service-worker.js');
   }
 
+  // Listen to ⌘+K to clear out mesages
+  (function () {
+    const messages = document.getElementById("messages");
+
+    document.addEventListener("keydown", event => {
+      if (!event.metaKey || String.fromCharCode(event.keyCode) !== "K") {
+        return;
+      }
+
+      while (messages.firstChild) {
+        messages.removeChild(messages.firstChild);
+      }
+    })
+  })();
+
   // Websocket connection
-  (() => {
+  (function () {
     const protocol = document.location.protocol === "https:" ? "wss:" : "ws:";
     const websocket = new WebSocket(`${protocol}//${document.location.host}/`);
 
