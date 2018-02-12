@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+
+require 'bundler/setup'
+require 'cssminify'
+require 'uglifier'
+
+def asset(filename)
+  File.read(File.expand_path(File.join('..', 'assets', filename), __dir__))
+end
+
+def write(filename, content)
+  filepath = File.expand_path(File.join('..', 'public', filename), __dir__)
+  File.write(filepath, content)
+end
+
+%w[application.js service-worker.js].each do |filename|
+  content = Uglifier.compile(asset(filename), harmony: true)
+  write(filename, content)
+end
+
+'application.css'.yield_self do |filename|
+  content = CSSminify.compress(asset(filename))
+  write(filename, content)
+end

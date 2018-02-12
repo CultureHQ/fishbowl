@@ -1,0 +1,9 @@
+body {
+  background-color: black;
+  color: #ddd;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.timestamp {
+  color: #8cb4d6;
+}

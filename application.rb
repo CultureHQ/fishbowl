@@ -70,6 +70,37 @@ module FishBowl
   end
 
   class Application < Sinatra::Base
+    websocket =
+      if ENV['RACK_ENV'] == 'production'
+        'wss://fishbowl.culturehq.com'
+      else
+        'ws://localhost:4567'
+      end
+
+    csp = [
+      "default-src 'none'",
+      "connect-src 'self' #{websocket}",
+      "script-src 'self'",
+      "style-src 'self'",
+      "img-src 'self'",
+      "manifest-src 'self'",
+      "base-uri 'none'",
+      "form-action 'none'",
+      "frame-ancestors 'none'",
+      'report-uri https://culturehq.report-uri.com/r/d/csp/enforce'
+    ]
+
+    HEADERS = {
+      'Content-Security-Policy' => csp.join('; '),
+      'Expect-CT' => 'max-age=86400, report-uri="https://culturehq.report-uri.com/r/d/ct/reportOnly"',
+      'Referrer-Policy' => 'same-origin',
+      'Server' => 'CultureHQ.com',
+      'Strict-Transport-Security' => 'max-age=31536000; includeSubDomains; preload',
+      'X-Download-Options' => 'noopen',
+      'X-Frame-Options' => 'deny',
+      'X-Permitted-Cross-Domain-Poilcies' => 'none'
+    }.freeze
+
     def authorized?
       @auth ||= Rack::Auth::Basic::Request.new(request.env)
       @auth.provided? && @auth.basic? && compare(*@auth.credentials)
@@ -89,6 +120,10 @@ module FishBowl
     set :server, 'puma'
     set :bind, '0.0.0.0'
 
+    before do
+      headers(HEADERS)
+    end
+
     get '/' do
       protected!
       send_file('views/index.html')
@@ -103,6 +138,7 @@ module FishBowl
     end
 
     use Middleware
+    use Rack::Deflater
     run!
   end
 end
