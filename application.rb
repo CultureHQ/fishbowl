@@ -137,9 +137,8 @@ module FishBowl
       RedisFactory.build.publish(RedisFactory::CHANNEL, request.body.read)
     end
 
-    error 400..599 do
-      halt 403
-    end
+    error(400) { halt 403 }
+    error(402..599) { halt 403 }
 
     use Middleware
     use Rack::Deflater
