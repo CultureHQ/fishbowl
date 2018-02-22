@@ -98,7 +98,7 @@ module FishBowl
       'Strict-Transport-Security' => 'max-age=31536000; includeSubDomains; preload',
       'X-Download-Options' => 'noopen',
       'X-Frame-Options' => 'deny',
-      'X-Permitted-Cross-Domain-Poilcies' => 'none'
+      'X-Permitted-Cross-Domain-Policies' => 'none'
     }.freeze
 
     def authorized?
