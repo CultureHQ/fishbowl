@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'faye/websocket'
 require 'json'
 require 'puma'
@@ -16,13 +18,13 @@ if File.exist?('.env')
 end
 
 module FishBowl
-  module RedisFactory
+  module Redis
     CHANNEL = 'fishbowl'
     REDIS_URI = URI.parse(ENV['REDIS'])
 
     # Build a new redis connection
     def self.build
-      Redis.new(
+      ::Redis.new(
         host: REDIS_URI.host,
         port: REDIS_URI.port,
         password: REDIS_URI.password
@@ -36,12 +38,12 @@ module FishBowl
     def initialize(app)
       @app     = app
       @clients = []
-      @redis   = RedisFactory.build
+      @redis   = Redis.build
 
       # In a separate thread, subscribe to the redis channel and broadcast to
       # each of the connected clients whenever messages are received.
       Thread.new do
-        RedisFactory.build.subscribe(RedisFactory::CHANNEL) do |on|
+        Redis.build.subscribe(Redis::CHANNEL) do |on|
           on.message do |_channel, message|
             @clients.each { |client| client.send(message) }
           end
@@ -70,6 +72,8 @@ module FishBowl
   end
 
   class Application < Sinatra::Base
+    report_uri = 'https://culturehq.report-uri.com/r/d'
+
     websocket =
       if ENV['RACK_ENV'] == 'production'
         'wss://fishbowl.culturehq.com'
@@ -87,15 +91,16 @@ module FishBowl
       "base-uri 'none'",
       "form-action 'none'",
       "frame-ancestors 'none'",
-      'report-uri https://culturehq.report-uri.com/r/d/csp/enforce'
+      "report-uri #{report_uri}/csp/enforce"
     ]
 
     HEADERS = {
       'Content-Security-Policy' => csp.join('; '),
-      'Expect-CT' => 'max-age=86400, report-uri="https://culturehq.report-uri.com/r/d/ct/reportOnly"',
+      'Expect-CT' => "max-age=86400, report-uri=\"#{report_uri}/ct/enforce\"",
       'Referrer-Policy' => 'same-origin',
       'Server' => 'CultureHQ.com',
-      'Strict-Transport-Security' => 'max-age=31536000; includeSubDomains; preload',
+      'Strict-Transport-Security' =>
+        'max-age=31536000; includeSubDomains; preload',
       'X-Download-Options' => 'noopen',
       'X-Frame-Options' => 'deny',
       'X-Permitted-Cross-Domain-Policies' => 'none'
@@ -107,7 +112,7 @@ module FishBowl
     end
 
     def compare(username, password)
-      Rack::Utils.secure_compare(username, ENV['USERNAME']) &&
+      Rack::Utils.secure_compare(username, ENV['USERNAME']) &
         Rack::Utils.secure_compare(password, ENV['PASSWORD'])
     end
 
@@ -134,7 +139,7 @@ module FishBowl
     end
 
     post '/events' do
-      RedisFactory.build.publish(RedisFactory::CHANNEL, request.body.read)
+      Redis.build.publish(Redis::CHANNEL, request.body.read)
     end
 
     error(400) { halt 403 }
