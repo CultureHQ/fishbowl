@@ -2,24 +2,24 @@ GEM
   remote: https://rubygems.org/
   specs:
     cssminify (1.0.2)
-    eventmachine (1.2.5)
+    eventmachine (1.2.7)
     execjs (2.7.0)
     faye-websocket (0.10.7)
       eventmachine (>= 0.12.0)
       websocket-driver (>= 0.5.1)
-    mustermann (1.0.1)
-    puma (3.11.2)
-    rack (2.0.4)
-    rack-protection (2.0.0)
+    mustermann (1.0.3)
+    puma (3.12.1)
+    rack (2.0.7)
+    rack-protection (2.0.5)
       rack
-    redis (4.0.1)
-    sinatra (2.0.0)
+    redis (4.1.1)
+    sinatra (2.0.5)
       mustermann (~> 1.0)
       rack (~> 2.0)
-      rack-protection (= 2.0.0)
+      rack-protection (= 2.0.5)
       tilt (~> 2.0)
-    tilt (2.0.8)
-    uglifier (4.1.6)
+    tilt (2.0.9)
+    uglifier (4.1.20)
       execjs (>= 0.3.0, < 3)
     websocket-driver (0.7.0)
       websocket-extensions (>= 0.1.0)
@@ -30,11 +30,11 @@ PLATFORMS
 
 DEPENDENCIES
   cssminify
-  faye-websocket
-  puma
-  redis
-  sinatra
+  faye-websocket (~> 0.10)
+  puma (~> 3.12)
+  redis (~> 4.1)
+  sinatra (~> 2.0)
   uglifier
 
 BUNDLED WITH
-   1.16.1
+   1.17.2
