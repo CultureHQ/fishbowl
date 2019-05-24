@@ -17,9 +17,7 @@ curl -X POST \
 
 You should see that event pop up in your browser. Any POST payload will be read and displayed along with the timestamp that it is received. The browser should now look something like the below screenshot:
 
-<div align="center">
-  <img alt="FishBowl" src="./docs/fishbowl.png">
-</div>
+![Screenshot](docs/screenshot.png)
 
 ## Caveats
 
