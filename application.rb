@@ -5,7 +5,6 @@ require 'json'
 require 'puma'
 require 'redis'
 require 'sinatra/base'
-require 'thread'
 
 # Load environment variables from .env if the file exists
 if File.exist?('.env')
@@ -52,22 +51,20 @@ module FishBowl
     end
 
     def call(env)
-      if Faye::WebSocket.websocket?(env)
-        client = Faye::WebSocket.new(env, nil, { ping: KEEPALIVE })
+      return @app.call(env) unless Faye::WebSocket.websocket?(env)
 
-        client.on :open do |event|
-          @clients << client
-        end
+      client = Faye::WebSocket.new(env, nil, ping: KEEPALIVE)
 
-        client.on :close do |event|
-          @clients.delete(client)
-          client = nil
-        end
-
-        client.rack_response
-      else
-        @app.call(env)
+      client.on :open do |_event|
+        @clients << client
       end
+
+      client.on :close do |_event|
+        @clients.delete(client)
+        client = nil
+      end
+
+      client.rack_response
     end
   end
 
@@ -118,6 +115,7 @@ module FishBowl
 
     def protected!
       return if authorized?
+
       response['WWW-Authenticate'] = 'Basic realm="Restricted Area"'
       throw(:halt, [401, 'Unauthorized'])
     end

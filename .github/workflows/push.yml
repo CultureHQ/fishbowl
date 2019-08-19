@@ -1,0 +1,33 @@
+on: push
+name: Push
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Install
+      uses: docker://culturehq/actions-bundler:latest
+      with:
+        args: install
+    - name: Lint
+      uses: docker://culturehq/actions-bundler:latest
+      with:
+        args: exec rubocop --parallel
+  audit:
+    name: Audit
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Install
+      uses: docker://culturehq/actions-bundler:latest
+      with:
+        args: install
+    - name: Update
+      uses: docker://culturehq/actions-bundler:latest
+      with:
+        args: exec bundle audit --update
+    - name: Audit
+      uses: docker://culturehq/actions-bundler:latest
+      with:
+        args: exec bundle audit
