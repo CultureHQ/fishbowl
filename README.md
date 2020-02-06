@@ -1,6 +1,6 @@
 # FishBowl
 
-[![Build Status](https://github.com/CultureHQ/fishbowl/workflows/Push/badge.svg)](https://github.com/CultureHQ/fishbowl/actions)
+[![Build Status](https://github.com/CultureHQ/fishbowl/workflows/Main/badge.svg)](https://github.com/CultureHQ/fishbowl/actions)
 
 FishBowl is a real-time application monitoring system. It uses websockets and a redis subscription to display requests as they happen.
 
