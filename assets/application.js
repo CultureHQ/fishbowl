@@ -1,14 +1,16 @@
-self.onload = () => {
+"use strict";
+
+self.onload = function () {
   // Service worker registration
   if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register('service-worker.js');
+    navigator.serviceWorker.register("service-worker.js");
   }
 
-  // Listen to ⌘+K to clear out mesages
+  // Listen to ⌘+K to clear out messages
   (function () {
-    const messages = document.getElementById("messages");
+    var messages = document.getElementById("messages");
 
-    document.addEventListener("keydown", event => {
+    document.addEventListener("keydown", function (event) {
       if (!event.metaKey || String.fromCharCode(event.keyCode) !== "K") {
         return;
       }
@@ -16,23 +18,23 @@ self.onload = () => {
       while (messages.firstChild) {
         messages.removeChild(messages.firstChild);
       }
-    })
+    });
   })();
 
   // Websocket connection
   (function () {
-    const protocol = document.location.protocol === "https:" ? "wss:" : "ws:";
-    const websocket = new WebSocket(`${protocol}//${document.location.host}/`);
+    var protocol = document.location.protocol === "https:" ? "wss:" : "ws:";
+    var websocket = new WebSocket(protocol + "//" + document.location.host + "/");
 
-    const messages = document.getElementById("messages");
-    const append = message => {
-      let container = document.createElement("div");
-      let timestamp = document.createElement("span");
+    var messages = document.getElementById("messages");
+    var append = function (message) {
+      var container = document.createElement("div");
+      var timestamp = document.createElement("span");
+
       timestamp.className = "timestamp";
+      timestamp.appendChild(document.createTextNode("[" + new Date().toISOString() + "]"));
 
-      timestamp.appendChild(document.createTextNode(`[${new Date().toISOString()}]`));
       container.appendChild(timestamp);
-
       container.appendChild(document.createTextNode(" "));
       container.appendChild(document.createTextNode(message));
 
@@ -40,13 +42,22 @@ self.onload = () => {
     };
 
     append("Connecting to server...");
-    websocket.onopen = () => {
+
+    websocket.onopen = function () {
       append("Connection successful.");
       append("Listening for messages...");
     };
 
-    websocket.onclose = () => append("Connection closed.");
-    websocket.onerror = () => append("An error occurred.");
-    websocket.onmessage = ({ data }) => append(data);
+    websocket.onclose = function () {
+      append("Connection closed.");
+    };
+
+    websocket.onerror = function () {
+      append("An error occurred.");
+    };
+
+    websocket.onmessage = function (message) {
+      append(message.data);
+    };
   })();
 };
