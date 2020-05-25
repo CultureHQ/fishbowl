@@ -47,7 +47,7 @@ GEM
     uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
     unicode-display_width (1.7.0)
-    websocket-driver (0.7.1)
+    websocket-driver (0.7.2)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.4)
 
@@ -65,4 +65,4 @@ DEPENDENCIES
   uglifier
 
 BUNDLED WITH
-   2.1.2
+   2.1.4
