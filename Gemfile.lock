@@ -20,7 +20,7 @@ GEM
     puma (4.3.5)
       nio4r (~> 2.0)
     rack (2.2.3)
-    rack-protection (2.0.8.1)
+    rack-protection (2.1.0)
       rack
     rainbow (3.0.0)
     redis (4.2.1)
@@ -39,10 +39,10 @@ GEM
       parser (>= 2.7.1.4)
     ruby-progressbar (1.10.1)
     ruby2_keywords (0.0.2)
-    sinatra (2.0.8.1)
+    sinatra (2.1.0)
       mustermann (~> 1.0)
-      rack (~> 2.0)
-      rack-protection (= 2.0.8.1)
+      rack (~> 2.2)
+      rack-protection (= 2.1.0)
       tilt (~> 2.0)
     thor (1.0.1)
     tilt (2.0.10)
@@ -63,7 +63,7 @@ DEPENDENCIES
   puma (~> 4.3)
   redis (~> 4.2)
   rubocop
-  sinatra (~> 2.0)
+  sinatra (~> 2.1)
   uglifier
 
 BUNDLED WITH
