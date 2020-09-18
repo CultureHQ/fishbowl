@@ -13,11 +13,11 @@ GEM
       websocket-driver (>= 0.5.1)
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
-    nio4r (2.5.3)
+    nio4r (2.5.4)
     parallel (1.19.2)
     parser (2.7.1.4)
       ast (~> 2.4.1)
-    puma (4.3.6)
+    puma (5.0.0)
       nio4r (~> 2.0)
     rack (2.2.3)
     rack-protection (2.1.0)
@@ -60,7 +60,7 @@ DEPENDENCIES
   bundler-audit
   cssminify
   faye-websocket (~> 0.11)
-  puma (~> 4.3)
+  puma (~> 5.0)
   redis (~> 4.2)
   rubocop
   sinatra (~> 2.1)
