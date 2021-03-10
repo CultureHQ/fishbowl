@@ -2,9 +2,9 @@ GEM
   remote: https://rubygems.org/
   specs:
     ast (2.4.2)
-    bundler-audit (0.7.0.1)
+    bundler-audit (0.8.0)
       bundler (>= 1.2.0, < 3)
-      thor (>= 0.18, < 2)
+      thor (~> 1.0)
     cssminify (1.0.2)
     eventmachine (1.2.7)
     execjs (2.7.0)
@@ -44,7 +44,7 @@ GEM
       rack (~> 2.2)
       rack-protection (= 2.1.0)
       tilt (~> 2.0)
-    thor (1.0.1)
+    thor (1.1.0)
     tilt (2.0.10)
     uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
