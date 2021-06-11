@@ -23,7 +23,7 @@ GEM
     rack-protection (2.1.0)
       rack
     rainbow (3.0.0)
-    redis (4.2.5)
+    redis (4.3.0)
     regexp_parser (2.1.1)
     rexml (3.2.5)
     rubocop (1.16.1)
@@ -61,7 +61,7 @@ DEPENDENCIES
   cssminify
   faye-websocket (~> 0.11)
   puma (~> 5.3)
-  redis (~> 4.2)
+  redis (~> 4.3)
   rubocop
   sinatra (~> 2.1)
   uglifier

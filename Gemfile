@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 
 gem 'faye-websocket', '~> 0.11'
 gem 'puma', '~> 5.3'
-gem 'redis', '~> 4.2'
+gem 'redis', '~> 4.3'
 gem 'sinatra', '~> 2.1'
 
 group :development do
