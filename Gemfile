@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 
 gem 'faye-websocket', '~> 0.11'
-gem 'puma', '~> 5.3'
+gem 'puma', '~> 5.4'
 gem 'redis', '~> 4.4'
 gem 'sinatra', '~> 2.1'
 
