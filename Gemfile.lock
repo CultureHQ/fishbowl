@@ -5,6 +5,7 @@ GEM
     bundler-audit (0.9.0.1)
       bundler (>= 1.2.0, < 3)
       thor (~> 1.0)
+    connection_pool (2.3.0)
     cssminify (1.0.2)
     eventmachine (1.2.7)
     execjs (2.7.0)
@@ -23,7 +24,10 @@ GEM
     rack-protection (2.1.0)
       rack
     rainbow (3.0.0)
-    redis (4.5.1)
+    redis (5.0.5)
+      redis-client (>= 0.9.0)
+    redis-client (0.9.0)
+      connection_pool
     regexp_parser (2.2.0)
     rexml (3.2.5)
     rubocop (1.24.1)
@@ -61,7 +65,7 @@ DEPENDENCIES
   cssminify
   faye-websocket (~> 0.11)
   puma (~> 5.5)
-  redis (~> 4.5)
+  redis (~> 5.0)
   rubocop
   sinatra (~> 2.1)
   uglifier
